@@ -29,13 +29,23 @@ describe('Biblioteca - Validar Login',()=>{
         cy.get('[data-cy="register-message"]').should('have.text', 'Cadastro realizado com sucesso! Você já pode entrar.');
     });
 
-    it('Realizar login com email inválido', () => {
+    it.only('Realizar login com email inválido', () => {
         cy.get('#login-email').type('dayane@gmail.com')
         cy.get('[data-cy="login-password"]').type('Cypress123!')
         cy.get('button[data-cy="login-submit"]').click()
         //Então a mensagem de email/senha inválida deve estar visivel
         cy.get('div[class="notice show error"]').should('be.visible')
         //Validar se contem o texto: E-mail ou senha inválidos.
-        
+        cy.get('#login-msg').should('have.text', 'E-mail ou senha inválidos.')
     });
+
+    it('Realizar logout', () => {
+        cy.get('#login-email').type('qa@biblioteca.com')
+        cy.get('[data-cy="login-password"]').type('Cypress123!')
+        cy.get('button[data-cy="login-submit"]').click()
+        cy.get('[data-cy="current-user"]').should('be.visible')
+        cy.get('[data-cy="logout-button"]').click()
+        cy.get('div[id="login-panel"] > h2').should('have.text','Acesse sua conta')
+    });
+
 })
