@@ -2,7 +2,7 @@
 
 describe('Biblioteca - Validar Login',()=>{
     beforeEach(() => {
-        cy.visit('index.html')
+        cy.visit('/')
     });
 
     it("Realizar login com credenciais válidas",()=>{
@@ -29,7 +29,7 @@ describe('Biblioteca - Validar Login',()=>{
         cy.get('[data-cy="register-message"]').should('have.text', 'Cadastro realizado com sucesso! Você já pode entrar.');
     });
 
-    it.only('Realizar login com email inválido', () => {
+    it('Realizar login com email inválido', () => {
         cy.get('#login-email').type('dayane@gmail.com')
         cy.get('[data-cy="login-password"]').type('Cypress123!')
         cy.get('button[data-cy="login-submit"]').click()
@@ -47,5 +47,17 @@ describe('Biblioteca - Validar Login',()=>{
         cy.get('[data-cy="logout-button"]').click()
         cy.get('div[id="login-panel"] > h2').should('have.text','Acesse sua conta')
     });
+
+    it.only('Realizar login válido usando o fixtures', () => {
+        cy.fixture('usuarios').then((massaDados) =>{
+            const usuario = massaDados["valido"];
+            cy.get('#login-email').type(usuario.email)
+            cy.get('[data-cy="login-password"]').type(usuario.senha)
+        })
+        cy.get('button[data-cy="login-submit"]').click()
+        cy.get('[data-cy="current-user"]').should('be.visible')
+        cy.get('[data-cy="current-user"]').should('have.text','QA Demonstração')
+    });
+    //Fazer o teste usando o usuario invalido
 
 })
