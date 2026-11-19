@@ -35,8 +35,31 @@ describe('Validações da página de Cadastro de Livros', () => {
         //Criar a validação de uma tabela
     });
 
-    it('Cadastrar novo livro usando o fixtures', () => {
+    it.only('Cadastrar novo livro usando o fixtures', () => {
         //Fazer o cadastro usando algum dos livros do arquivo livros.json
+        cy.fixture('livros').then((listaDelivros) => {
+        const livro = listaDelivros["livro2"];
+        cy.get('[data-cy="book-title"]').type(livro.nome)
+        cy.get('[data-cy="book-author"]').type(livro.autor)
+        cy.get('[data-cy="book-isbn"]').type(livro.ISBN)
+        cy.get('[data-cy="book-year"]').type(livro.Ano)
+        //cy.get('[data-cy="book-category"]').click()
+        
+        cy.get('#category').select(livro.categoria)
+        cy.get('#category').should('have.value',livro.categoria)
+        //cy.get('#quantity').clear()
+        cy.get('#quantity').clear().type(livro.quantidade)
+        cy.get('#quantity').should('have.value',livro.quantidade)
+
+        })
+        cy.get('input[data-cy="condition-good"]').check()
+        cy.get('input[data-cy="condition-good"]').should('be.checked')
+        cy.get('[data-cy="condition-new"]').should('not.be.checked')
+        cy.get('[data-cy="condition-used"]').should('not.be.checked')
+        cy.get('#featured').check()
+        cy.get('button').contains('Salvar livro').click()
+        cy.get('div[class="notice show success"]').should('have.text','Livro cadastrado com sucesso!')
+        
     });
     
 });
