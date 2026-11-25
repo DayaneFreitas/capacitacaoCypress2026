@@ -5,6 +5,6 @@
     },
     "invalido":{
         "email":"qa@biblioteca.com",
-        "senha":"Cypress123!"  
+        "senha":"SenhaInvalida123!"
     }
 }

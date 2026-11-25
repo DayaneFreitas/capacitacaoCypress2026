@@ -1,7 +1,7 @@
 class LoginPage {
     //Página com os elementos e ações da tela de Login
     elementos = {
-        campoEmail: '#login-email',
+        campoEmail: '[data-cy="login-email"]',
         campoSenha: '[data-cy="login-password"]',
         botaoEntrar: 'button[data-cy="login-submit"]'
     }
@@ -24,5 +24,11 @@ class LoginPage {
 
     validarMensagemCampoObrigatorio(msg){
         cy.get('span[class="err"]').should('have.text',msg)
+    }
+
+    validarMensagemErroLogin(mensagem){
+        cy.get('[data-cy="login-message"]')
+            .should('be.visible')
+            .and('have.text',mensagem)
     }
 } export default LoginPage

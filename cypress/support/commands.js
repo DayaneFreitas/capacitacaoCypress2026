@@ -10,7 +10,17 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+ Cypress.Commands.add('login', (valido) => { 
+    cy.fixture('usuarios').then(() => {
+            cy.get('[data-cy="login-email"]').type(valido.email)
+            cy.get('[data-cy="login-password"]').type(valido.senha)
+            cy.get('[data-cy="login-submit"]').click()
+        })
+
+        cy.get('[data-cy="current-user"]')
+            .should('be.visible')
+            .and('have.text', 'QA Demonstração')
+ })
 //
 //
 // -- This is a child command --
