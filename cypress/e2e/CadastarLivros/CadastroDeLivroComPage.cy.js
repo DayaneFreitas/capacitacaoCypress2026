@@ -20,12 +20,13 @@ describe('Cadastro de livros com Page Object', () => {
     // Autentica e abre o formulário antes de cada cenário.
     beforeEach(() => {
         cy.visit('/')
-        loginPage.preencherCampoEmail('qa@biblioteca.com')
+        cy.login('valido') // Usa o comando customizado de login
+        /*loginPage.preencherCampoEmail('qa@biblioteca.com')
         loginPage.preencherCampoSenha('Cypress123!')
         loginPage.clicarNoBotaoEntrar()
         cy.get('[data-cy="current-user"]')
             .should('be.visible')
-            .and('have.text', 'QA Demonstração')
+            .and('have.text', 'QA Demonstração')*/
         cy.get('[data-cy="nav-book-form"]').click()
         cy.get('#view-book-form h2').should('have.text', 'Cadastrar livro')
     })
